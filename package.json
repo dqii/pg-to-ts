@@ -1,5 +1,5 @@
 {
-  "name": "pg-to-ts",
+  "name": "@diqi/pg-to-ts",
   "version": "4.1.0",
   "description": "Generate TypeScript-friendly interfaces and constants from (postgres) SQL database schema",
   "keywords": [
@@ -29,10 +29,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/danvk/pg-to-ts.git"
+    "url": "git+https://github.com/dqii/pg-to-ts.git"
   },
   "bugs": {
-    "url": "https://github.com/danvk/pg-to-ts/issues"
+    "url": "https://github.com/dqii/pg-to-ts/issues"
   },
   "author": "Dan Vanderkam <danvdk@gmail.com>",
   "contributors": [
@@ -66,5 +66,9 @@
   },
   "peerDependencies": {
     "typescript": "^4.1"
+  },
+  "homepage": "https://github.com/dqii/pg-to-ts#readme",
+  "directories": {
+    "test": "test"
   }
 }
