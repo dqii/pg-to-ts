@@ -89,6 +89,8 @@ export function pgTypeToTsType(
 interface Metadata {
   schema: string;
   enumTypes: Record<string, string[]>;
+  views: string[];
+  updatableViews: string[];
   foreignKeys: {[tableName: string]: {[columnName: string]: ForeignKey}};
   tableToKeys: {[tableName: string]: string};
   columnComments: {[tableName: string]: {[columnName: string]: string}};
@@ -153,10 +155,19 @@ export class PostgresDatabase {
   }
 
   public async getTableDefinition(tableName: string, tableSchema: string) {
-    const {tableToKeys, columnComments, tableComments, foreignKeys} =
-      await this.getMeta(tableSchema);
+    const {
+      tableToKeys,
+      columnComments,
+      tableComments,
+      foreignKeys,
+      views,
+      updatableViews,
+    } = await this.getMeta(tableSchema);
 
+    const isView = views.includes(tableName);
     const tableDefinition: TableDefinition = {
+      isView: views.includes(tableName),
+      isUpdatable: !isView || updatableViews.includes(tableName),
       columns: {},
       primaryKey: tableToKeys[tableName] || null,
     };
@@ -371,28 +382,65 @@ export class PostgresDatabase {
       .value();
   }
 
+  async getViews(schemaName: string) {
+    interface View {
+      table_name: string;
+    }
+    const views: View[] = await this.db.query(
+      `
+        SELECT
+          table_name
+        FROM
+          information_schema.views
+        WHERE
+          table_schema = $1
+        `,
+      schemaName,
+    );
+    return views.map(view => view.table_name);
+  }
+
+  async getUpdatableViews(schemaName: string) {
+    interface View {
+      table_name: string;
+    }
+    const views: View[] = await this.db.query(
+      `
+        SELECT
+          table_name
+        FROM
+          information_schema.views
+        WHERE
+          table_schema = $1
+          and is_updatable = 'YES'
+        `,
+      schemaName,
+    );
+    return views.map(view => view.table_name);
+  }
+
+  async promiseObject(obj: Object) {
+    const keys = Object.keys(obj);
+    const values = await Promise.all(Object.values(obj));
+    const entries = keys.map((k, i) => [k, values[i]]);
+    return Object.fromEntries(entries);
+  }
+
   async getMeta(schemaName: string): Promise<Metadata> {
     if (this.metadata && schemaName === this.metadata.schema) {
       return this.metadata;
     }
 
-    const [enumTypes, tableToKeys, foreignKeys, columnComments, tableComments] =
-      await Promise.all([
-        this.getEnumTypes(),
-        this.getPrimaryKeys(schemaName),
-        this.getForeignKeys(schemaName),
-        this.getColumnComments(schemaName),
-        this.getTableComments(schemaName),
-      ]);
-
-    const metadata: Metadata = {
+    const metadata: Metadata = await this.promiseObject({
       schema: schemaName,
-      enumTypes,
-      tableToKeys,
-      foreignKeys,
-      columnComments,
-      tableComments,
-    };
+      enumTypes: this.getEnumTypes(),
+      tableToKeys: this.getPrimaryKeys(schemaName),
+      foreignKeys: this.getForeignKeys(schemaName),
+      columnComments: this.getColumnComments(schemaName),
+      tableComments: this.getTableComments(schemaName),
+      views: this.getViews(schemaName),
+      updatableViews: this.getUpdatableViews(schemaName),
+    });
 
     this.metadata = metadata;
     return metadata;

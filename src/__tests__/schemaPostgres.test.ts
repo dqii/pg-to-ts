@@ -226,6 +226,8 @@ describe('PostgresDatabase', () => {
             },
             primaryKey: 'id',
             comment: 'Table Comment',
+            isView: false,
+            isUpdatable: true,
           },
           ['CustomType'],
           options,

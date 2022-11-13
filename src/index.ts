@@ -107,12 +107,17 @@ export async function typescriptOfSchema(
   }
 
   const tableNames = interfaceTuples.map(([, names]) => names);
+  const tableUpdatable = interfaceTuples.map(tuple => tuple[3]);
   const typeMaps = tableNames
     .map(
-      names => `
+      (names, index) => `
     ${names.var}: {
-      select: ${names.type};
-      input: ${names.input};
+      ${[
+        `select: ${names.type};`,
+        tableUpdatable[index] ? `input: ${names.input};` : '',
+      ]
+        .filter(s => !!s)
+        .join('\n')}
     };`,
     )
     .join('');

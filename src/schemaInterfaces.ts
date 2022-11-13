@@ -15,6 +15,8 @@ export interface ColumnDefinition {
 }
 
 export interface TableDefinition {
+  isView: boolean;
+  isUpdatable: boolean;
   columns: {[columnName: string]: ColumnDefinition};
   primaryKey: string | null;
   comment?: string;

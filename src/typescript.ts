@@ -78,7 +78,12 @@ export function generateTableInterface(
   tableDefinition: TableDefinition,
   schemaName: string,
   options: Options,
-): [code: string, names: TableNames, typesToImport: Set<string>] {
+): [
+  code: string,
+  names: TableNames,
+  typesToImport: Set<string>,
+  isUpdatable: boolean,
+] {
   let selectableMembers = '';
   let insertableMembers = '';
   const columns: string[] = [];
@@ -123,7 +128,7 @@ export function generateTableInterface(
   let camelTableName = _.startCase(_.camelCase(tableVarName)).replace(/ /g, ''); // e.g. SchemaTableName
   if (options.options.singularize) camelTableName = singular(camelTableName);
 
-  const {primaryKey, comment} = tableDefinition;
+  const {primaryKey, comment, isView, isUpdatable} = tableDefinition;
   const foreignKeys = _.pickBy(
     _.mapValues(
       _.mapKeys(tableDefinition.columns, (v, k) =>
@@ -141,26 +146,29 @@ export function generateTableInterface(
     input: camelTableName + 'Input',
   };
 
-  return [
-    `
-      // Table ${sqlTableName}
-      ${jsdoc} export interface ${names.type} {
-        ${selectableMembers}}
-      ${jsdoc} export interface ${names.input} {
-        ${insertableMembers}}
-      const ${names.var} = {
-        tableName: '${sqlTableName}',
-        columns: ${quotedArray(columns)},
-        requiredForInsert: ${quotedArray(requiredForInsert)},
-        primaryKey: ${quoteNullable(primaryKey)},
-        foreignKeys: ${quoteForeignKeyMap(foreignKeys)},
-        $type: null as unknown as ${names.type},
-        $input: null as unknown as ${names.input}
-      } as const;
-  `,
-    names,
-    typesToImport,
-  ];
+  const typescript = [
+    `// ${isView ? 'View' : 'Table'} ${sqlTableName}`,
+    `${jsdoc} export interface ${names.type} {${selectableMembers}}`,
+    isUpdatable ? `export interface ${names.input} {${insertableMembers}}` : '',
+    `const ${names.var} = {
+      ${isView ? 'viewName' : 'tableName'}: '${sqlTableName}',
+      columns: ${quotedArray(columns)},
+      ${
+        isUpdatable
+          ? `
+          requiredForInsert: ${quotedArray(requiredForInsert)},
+          primaryKey: ${quoteNullable(primaryKey)},
+          foreignKeys: ${quoteForeignKeyMap(foreignKeys)},`
+          : ''
+      }
+      $type: null as unknown as ${names.type},
+      ${isUpdatable ? `$input: null as unknown as ${names.input}` : ''}
+    } as const;`,
+  ]
+    .filter(s => !!s)
+    .join('\n');
+
+  return ['\n' + typescript + '\n', names, typesToImport, isUpdatable];
 }
 
 export function generateEnumType(
