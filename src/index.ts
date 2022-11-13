@@ -12,6 +12,7 @@ import {
 import Options, {OptionValues} from './options';
 import {processString, Options as ITFOptions} from 'typescript-formatter';
 import {PostgresDatabase} from './schemaPostgres';
+import prettier from 'prettier';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const pkgVersion = require('../package.json').version;
@@ -167,7 +168,9 @@ export async function typescriptOfSchema(
     output,
     formatterOption,
   );
-  return processedResult.dest.replace(/ {4}/g, '  ');
+  return prettier.format(processedResult.dest.replace(/ {4}/g, '  '), {
+    parser: 'typescript',
+  });
 }
 
 export {Database} from './schemaInterfaces';
