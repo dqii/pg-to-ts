@@ -30,12 +30,14 @@ const argv = yargs(hideBin(process.argv))
           describe: 'database connection string',
           demandOption: true,
           type: 'string',
+          default: process.env.DATABASE_URL,
         },
         output: {
           alias: 'o',
           describe: 'output file name',
           type: 'string',
           demandOption: true,
+          default: 'schema.ts',
         },
         table: {
           alias: 't',
