@@ -150,7 +150,7 @@ export async function typescriptOfSchema(
   }
 
   export const tables = {
-    ${tableMap},
+    ${tableMap}
   }
   `;
 
