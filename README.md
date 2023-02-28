@@ -30,7 +30,7 @@ const product = {
   tableName: 'product',
   columns: ['id', 'name', 'description', 'created_at'],
   requiredForInsert: ['name', 'description'],
-} as const;
+}
 
 export interface TableTypes {
   product: {
@@ -169,7 +169,7 @@ const maxi_product = {
   tableName: 'maxi.product',
   columns: ['id', 'name', 'description', 'created_at'],
   requiredForInsert: ['name', 'description'],
-} as const;
+}
 
 export interface TableTypes {
   maxi_product: {

@@ -210,7 +210,7 @@ const users = {
   foreignKeys: {},
   $type: null as unknown as Users,
   $input: null as unknown as UsersInput,
-} as const;
+} 
 
 export interface TableTypes {
   users: {
@@ -435,7 +435,7 @@ const users = {
   foreignKeys: {},
   $type: null as unknown as Users,
   $input: null as unknown as UsersInput,
-} as const;
+} 
 
 export interface TableTypes {
   users: {
@@ -515,7 +515,7 @@ const comment = {
   },
   $type: null as unknown as Comment,
   $input: null as unknown as CommentInput,
-} as const;
+} 
 
 // Table doc
 export interface Doc {
@@ -544,7 +544,7 @@ const doc = {
   },
   $type: null as unknown as Doc,
   $input: null as unknown as DocInput,
-} as const;
+} 
 
 // Table table_with_underscores
 export interface TableWithUnderscores {
@@ -561,7 +561,7 @@ const table_with_underscores = {
   foreignKeys: {},
   $type: null as unknown as TableWithUnderscores,
   $input: null as unknown as TableWithUnderscoresInput,
-} as const;
+} 
 
 // Table users
 export interface Users {
@@ -582,7 +582,7 @@ const users = {
   foreignKeys: {},
   $type: null as unknown as Users,
   $input: null as unknown as UsersInput,
-} as const;
+} 
 
 export interface TableTypes {
   comment: {
@@ -673,7 +673,7 @@ const public_comment = {
   },
   $type: null as unknown as PublicComment,
   $input: null as unknown as PublicCommentInput,
-} as const;
+} 
 
 // Table public.doc
 export interface PublicDoc {
@@ -702,7 +702,7 @@ const public_doc = {
   },
   $type: null as unknown as PublicDoc,
   $input: null as unknown as PublicDocInput,
-} as const;
+} 
 
 // Table public.table_with_underscores
 export interface PublicTableWithUnderscores {
@@ -719,7 +719,7 @@ const public_table_with_underscores = {
   foreignKeys: {},
   $type: null as unknown as PublicTableWithUnderscores,
   $input: null as unknown as PublicTableWithUnderscoresInput,
-} as const;
+} 
 
 // Table public.users
 export interface PublicUsers {
@@ -740,7 +740,7 @@ const public_users = {
   foreignKeys: {},
   $type: null as unknown as PublicUsers,
   $input: null as unknown as PublicUsersInput,
-} as const;
+} 
 
 export interface TableTypes {
   public_comment: {
@@ -831,7 +831,7 @@ const public_comment = {
   },
   $type: null as unknown as PublicComment,
   $input: null as unknown as PublicCommentInput,
-} as const;
+} 
 
 // Table public.doc
 export interface PublicDoc {
@@ -860,7 +860,7 @@ const public_doc = {
   },
   $type: null as unknown as PublicDoc,
   $input: null as unknown as PublicDocInput,
-} as const;
+} 
 
 // Table public.table_with_underscores
 export interface PublicTableWithUnderscore {
@@ -877,7 +877,7 @@ const public_table_with_underscores = {
   foreignKeys: {},
   $type: null as unknown as PublicTableWithUnderscore,
   $input: null as unknown as PublicTableWithUnderscoreInput,
-} as const;
+} 
 
 // Table public.users
 export interface PublicUser {
@@ -898,7 +898,7 @@ const public_users = {
   foreignKeys: {},
   $type: null as unknown as PublicUser,
   $input: null as unknown as PublicUserInput,
-} as const;
+} 
 
 export interface TableTypes {
   public_comment: {
@@ -958,7 +958,7 @@ const public_users = {
   foreignKeys: {},
   $type: null as unknown as PublicUsers,
   $input: null as unknown as PublicUsersInput,
-} as const;
+} 
 
 // Table public.table_with_underscores
 export interface PublicTableWithUnderscores {
@@ -975,7 +975,7 @@ const public_table_with_underscores = {
   foreignKeys: {},
   $type: null as unknown as PublicTableWithUnderscores,
   $input: null as unknown as PublicTableWithUnderscoresInput,
-} as const;
+} 
 
 export interface TableTypes {
   public_users: {

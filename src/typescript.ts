@@ -163,7 +163,7 @@ export function generateTableInterface(
       }
       $type: null as unknown as ${names.type},
       ${isUpdatable ? `$input: null as unknown as ${names.input}` : ''}
-    } as const;`,
+    };`,
   ]
     .filter(s => !!s)
     .join('\n');
