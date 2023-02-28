@@ -32,7 +32,7 @@ describe('TypeScript', () => {
                   foreignKeys: {},
               $type: null as unknown as TableName,
               $input: null as unknown as TableNameInput
-            } as const;
+            };
         "
       `);
       expect(types).toEqual(new Set());
@@ -72,7 +72,7 @@ describe('TypeScript', () => {
                   foreignKeys: {},
               $type: null as unknown as TestschemanameTableName,
               $input: null as unknown as TestschemanameTableNameInput
-            } as const;
+            };
         "
       `);
       expect(types).toEqual(new Set());
@@ -110,7 +110,7 @@ describe('TypeScript', () => {
                   foreignKeys: {},
               $type: null as unknown as Package,
               $input: null as unknown as PackageInput
-            } as const;
+            } ;
         "
       `);
       expect(types).toEqual(new Set());
@@ -165,7 +165,7 @@ describe('TypeScript', () => {
                   foreignKeys: {},
               $type: null as unknown as TableName,
               $input: null as unknown as TableNameInput
-            } as const;
+            } ;
         "
       `);
       expect(names).toMatchInlineSnapshot(`
@@ -230,7 +230,7 @@ describe('TypeScript', () => {
                   foreignKeys: {},
               $type: null as unknown as TableName,
               $input: null as unknown as TableNameInput
-            } as const;
+            } ;
         "
       `);
       expect(names).toMatchInlineSnapshot(`
@@ -297,7 +297,7 @@ describe('TypeScript', () => {
                   foreignKeys: {user_id: { table: 'other_table', column: 'id', $type: null as unknown /* other_table */ },},
               $type: null as unknown as TableWithForeignKey,
               $input: null as unknown as TableWithForeignKeyInput
-            } as const;
+            } ;
         "
       `);
       expect(names).toMatchInlineSnapshot(`
@@ -341,7 +341,7 @@ describe('TypeScript', () => {
       foreignKeys: {user_id: { table: 'other_table', column: 'id', $type: null as unknown /* other_table */ },},
       $type: null as unknown as TableWithForeignKey,
       $input: null as unknown as TableWithForeignKeyInput
-    } as const;
+    } ;
     `;
     it('should attach joined types to generated TypeScript output', () => {
       expect(
@@ -362,7 +362,7 @@ describe('TypeScript', () => {
               foreignKeys: {user_id: { table: 'other_table', column: 'id', $type: null as unknown as OtherTable },},
               $type: null as unknown as TableWithForeignKey,
               $input: null as unknown as TableWithForeignKeyInput
-            } as const;
+            } ;
             "
       `);
     });
@@ -378,7 +378,7 @@ describe('TypeScript', () => {
               foreignKeys: {user_id: { table: 'other_table', column: 'id', $type: null as unknown /* other_table */ },},
               $type: null as unknown as TableWithForeignKey,
               $input: null as unknown as TableWithForeignKeyInput
-            } as const;
+            } ;
             "
       `);
     });
